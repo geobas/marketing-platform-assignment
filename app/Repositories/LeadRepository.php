@@ -30,9 +30,11 @@ class LeadRepository implements LeadRepositoryInterface
 
     public function list(array $data): LengthAwarePaginator
     {
-        return $this->lead->paginate($data['per_page'] ?? self::PER_PAGE)->appends([
-            'per_page' => $data['per_page'] ?? self::PER_PAGE,
-        ]);
+        return $this->lead
+            ->paginate($data['per_page'] ?? self::PER_PAGE)
+            ->appends([
+                'per_page' => $data['per_page'] ?? self::PER_PAGE,
+            ]);
     }
 
     public function update(UpdateLeadData $data): bool

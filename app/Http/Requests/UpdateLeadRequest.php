@@ -2,12 +2,21 @@
 
 namespace App\Http\Requests;
 
+use App\Contracts\LeadRepositoryInterface;
 use App\DTOs\UpdateLeadData;
-use App\Models\Lead;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateLeadRequest extends FormRequest
 {
+    /**
+     * Override the constructor.
+     */
+    public function __construct(
+        private LeadRepositoryInterface $repository
+    ) {
+        parent::__construct();
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -38,13 +47,13 @@ class UpdateLeadRequest extends FormRequest
         $validator->after(function ($validator) {
             $leadId = $this->route('lead');
 
-            if (empty(Lead::find($leadId))) {
+            if (empty($this->repository->findById($leadId))) {
                 $validator->errors()->add('lead', 'Lead not found.');
             }
 
             $email = $this->validated('email');
 
-            if ($email && Lead::where('email', $email)->where('_id', '!=', $leadId)->exists()) {
+            if (! empty($email) && $this->repository->existsByEmailExceptId($email, $leadId)) {
                 $validator->errors()->add('email', 'The email has already been taken.');
             }
         });

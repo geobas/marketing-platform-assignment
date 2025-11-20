@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\StoreLeadAction;
 use App\Http\Requests\StoreLeadRequest;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreLeadController extends Controller
@@ -15,6 +16,8 @@ class StoreLeadController extends Controller
     {
         $action->execute($request->toDto());
 
-        return response()->json(['message' => 'Lead saved successfully.'], Response::HTTP_CREATED);
+        Log::info('Lead stored successfully.', ['lead' => $request->toDto()->toArray()]);
+
+        return response()->json(['message' => 'Lead stored successfully.'], Response::HTTP_CREATED);
     }
 }
