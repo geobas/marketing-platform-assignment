@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\DTOs\LeadData;
+use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLeadRequest extends FormRequest
 {
@@ -24,8 +24,8 @@ class StoreLeadRequest extends FormRequest
     {
         return [
             'full_name' => ['required', 'string', 'max:100'],
-            'email'   => ['required', 'email', 'max:100', 'unique:leads,email'],
-            'consent'   => ['sometimes', 'boolean'],
+            'email' => ['required', 'email', 'max:100', 'unique:leads,email'],
+            'consent' => ['sometimes', 'boolean'],
         ];
     }
 

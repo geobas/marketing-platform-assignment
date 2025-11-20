@@ -9,8 +9,6 @@ class LeadRepository implements LeadRepositoryInterface
 {
     /**
      * Constructor
-     * 
-     * @param Lead $lead
      */
     public function __construct(
         private Lead $lead,

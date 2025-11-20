@@ -1,16 +1,15 @@
 <?php
+
 namespace App\Actions;
 
-use App\DTOs\LeadData;
 use App\Contracts\LeadRepositoryInterface;
+use App\DTOs\LeadData;
 use App\Models\Lead;
 
 class StoreLeadAction
 {
     /**
      * Constructor
-     * 
-     * @param LeadRepositoryInterface $repository
      */
     public function __construct(
         private LeadRepositoryInterface $repository
@@ -18,9 +17,6 @@ class StoreLeadAction
 
     /**
      * Execute the action to store a new Lead.
-     * 
-     * @param LeadData $data
-     * @return Lead
      */
     public function execute(LeadData $data): Lead
     {

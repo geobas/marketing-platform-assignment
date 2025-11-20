@@ -13,6 +13,6 @@ class Lead extends Model
     protected $fillable = [
         'full_name',
         'email',
-        'consent'
+        'consent',
     ];
 }
