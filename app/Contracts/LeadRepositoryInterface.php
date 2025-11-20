@@ -22,7 +22,7 @@ interface LeadRepositoryInterface
     /**
      * Update an existing Lead.
      */
-    public function update(UpdateLeadData $data): bool;
+    public function update(UpdateLeadData $data): Lead;
 
     /**
      * Find Lead by ID.

@@ -7,4 +7,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/leads', [LeadController::class, 'index'])->name('leads.list');
+Route::get('/leads', [LeadController::class, 'index'])->name('leads.index');
+Route::get('/leads/{lead}/edit', [LeadController::class, 'edit'])->name('leads.edit');
+Route::put('/leads/{lead}', [LeadController::class, 'update'])->name('leads.update');

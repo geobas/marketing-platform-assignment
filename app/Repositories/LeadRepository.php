@@ -38,17 +38,18 @@ class LeadRepository implements LeadRepositoryInterface
             ]);
     }
 
-    public function update(UpdateLeadData $data): bool
+    public function update(UpdateLeadData $data): Lead
     {
-        $data = $data->toArray();
-
-        $lead = $this->lead->find(new ObjectId($data['_id']));
-
-        return $lead->update([
-            'full_name' => $data['full_name'],
-            'email' => $data['email'],
-            'consent' => $data['consent'] ?? false,
-        ]);
+        return tap(
+            $this->lead->find(new ObjectId($data->_id)),
+            function (Lead $lead) use ($data) {
+                $lead->update([
+                    'full_name' => $data->fullName,
+                    'email' => $data->email,
+                    'consent' => $data->consent ?? false,
+                ]);
+            }
+        );
     }
 
     public function findById(string $id): ?Lead

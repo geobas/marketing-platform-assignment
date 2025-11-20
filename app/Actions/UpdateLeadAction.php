@@ -16,9 +16,9 @@ class UpdateLeadAction
     ) {}
 
     /**
-     * Execute the action to store a new Lead.
+     * Execute the action to update an existing Lead.
      */
-    public function execute(UpdateLeadData $data): bool
+    public function execute(UpdateLeadData $data): Lead
     {
         return $this->repository->update($data);
     }

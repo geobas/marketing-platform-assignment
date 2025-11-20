@@ -45,7 +45,7 @@ class UpdateLeadRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $leadId = $this->route('lead');
+            $leadId = $this->is('api/*') ? $this->route('lead') : $this->route('lead')->id;
 
             if (empty($this->repository->findById($leadId))) {
                 $validator->errors()->add('lead', 'Lead not found.');
@@ -64,8 +64,10 @@ class UpdateLeadRequest extends FormRequest
      */
     public function toDto(): UpdateLeadData
     {
+        $leadId = $this->is('api/*') ? $this->route('lead') : $this->route('lead')->id;
+
         return new UpdateLeadData(
-            _id: $this->route('lead'),
+            _id: $leadId,
             fullName: $this->validated('full_name'),
             email: $this->validated('email'),
             consent: $this->validated('consent') ?? false,
