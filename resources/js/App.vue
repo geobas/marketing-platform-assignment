@@ -4,13 +4,13 @@
 
             <!-- Subscribe button -->
             <button @click="showModal = true"
-                class="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-md transition">
+                class="px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-md transition cursor-pointer">
                 Subscribe
             </button>
 
             <!-- List Leads button -->
             <button @click="goToLeads"
-                class="px-6 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium shadow-md transition">
+                class="px-6 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium shadow-md transition cursor-pointer">
                 List Leads
             </button>
 

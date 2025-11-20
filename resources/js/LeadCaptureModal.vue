@@ -12,7 +12,7 @@
                         Full Name
                     </label>
                     <input v-model="form.full_name" type="text" required
-                        class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        class="w-full rounded-lg border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200">
                 </div>
 
                 <div>
@@ -20,7 +20,7 @@
                         Email Address
                     </label>
                     <input v-model="form.email" type="email" required
-                        class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        class="w-full rounded-lg border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200">
                 </div>
 
                 <div class="flex items-start space-x-2">
@@ -33,12 +33,12 @@
 
                 <div class="flex justify-between pt-2">
                     <button type="submit"
-                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow transition">
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 shadow transition cursor-pointer">
                         Submit
                     </button>
 
                     <button type="button" @click="closeModal"
-                        class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition">
+                        class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition cursor-pointer">
                         Cancel
                     </button>
                 </div>
