@@ -10,7 +10,7 @@
 
             <!-- List Leads button -->
             <button @click="goToLeads"
-                class="px-6 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium shadow-md transition cursor-pointer">
+                class="px-6 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium shadow-md cursor-pointer">
                 List Leads
             </button>
 

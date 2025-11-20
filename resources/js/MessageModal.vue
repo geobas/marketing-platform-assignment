@@ -1,14 +1,21 @@
 <template>
-    <div v-if="show" class="modal-backdrop">
-        <div class="modal">
-            <h2>{{ title }}</h2>
-            <p>{{ message }}</p>
-            <br>
-            <button @click="$emit('close')" type="button" class="close-btn">
-                Close
-            </button>
+    <transition name="fade">
+        <div v-if="show" class="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50">
+            <div
+                class="bg-white w-full max-w-md rounded-xl shadow-2xl p-6 relative transform transition-transform duration-300 ease-out hover:scale-105">
+
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4 text-center">{{ title }}</h2>
+                <p class="text-gray-700 text-center">{{ message }}</p>
+
+                <div class="flex justify-center mt-6">
+                    <button @click="closeModal" type="button"
+                        class="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 shadow transition-colors duration-300 ease-out transform hover:scale-105 cursor-pointer">
+                        Close
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>
@@ -17,6 +24,11 @@ export default {
         show: { type: Boolean, default: false },
         title: { type: String, default: "Error" },
         message: { type: String, default: "" },
+    },
+    methods: {
+        closeModal() {
+            this.$emit('close');
+        }
     }
 };
 </script>
@@ -58,5 +70,20 @@ export default {
     background: #9ca3af;
     /* pressed */
     color: white;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+    opacity: 1;
 }
 </style>
