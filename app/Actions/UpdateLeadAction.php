@@ -3,10 +3,10 @@
 namespace App\Actions;
 
 use App\Contracts\LeadRepositoryInterface;
-use App\DTOs\LeadData;
+use App\DTOs\UpdateLeadData;
 use App\Models\Lead;
 
-class StoreLeadAction
+class UpdateLeadAction
 {
     /**
      * Constructor
@@ -18,8 +18,8 @@ class StoreLeadAction
     /**
      * Execute the action to store a new Lead.
      */
-    public function execute(LeadData $data): Lead
+    public function execute(UpdateLeadData $data): bool
     {
-        return $this->repository->create($data);
+        return $this->repository->update($data);
     }
 }
