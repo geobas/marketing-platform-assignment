@@ -25,7 +25,10 @@ class LeadRepository implements LeadRepositoryInterface
 
     public function create(LeadData $data): Lead
     {
-        return $this->lead->create($data->toArray());
+        /** @var Lead $lead */
+        $lead = $this->lead->create($data->toArray());
+
+        return $lead;
     }
 
     public function list(array $data): LengthAwarePaginator
@@ -40,8 +43,11 @@ class LeadRepository implements LeadRepositoryInterface
 
     public function update(UpdateLeadData $data): Lead
     {
+        /** @var Lead $lead */
+        $lead = $this->lead->find(new ObjectId($data->_id));
+
         return tap(
-            $this->lead->find(new ObjectId($data->_id)),
+            $lead,
             function (Lead $lead) use ($data) {
                 $lead->update([
                     'full_name' => $data->fullName,
@@ -54,7 +60,10 @@ class LeadRepository implements LeadRepositoryInterface
 
     public function findById(string $id): ?Lead
     {
-        return $this->lead->find($id);
+        /** @var Lead|null $lead */
+        $lead = $this->lead->find($id);
+
+        return $lead;
     }
 
     public function existsByEmailExceptId(string $email, string $excludeId): bool

@@ -1,0 +1,21 @@
+includes:
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon # optional, enables latest checks
+
+parameters:
+    level: 5
+    paths:
+        - app
+
+    # Composer autoloader
+    bootstrapFiles:
+        - vendor/autoload.php
+
+    # Ignore specific errors
+    ignoreErrors:
+        - '#Access to an undefined property App\\Models\\Lead::\$#'
+
+    # Exclude directories (e.g., cache, logs)
+    excludePaths:
+        #- App/Views
+
+    reportUnmatchedIgnoredErrors: false

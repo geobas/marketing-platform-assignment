@@ -6,9 +6,9 @@ use App\Actions\ListLeadsAction;
 use App\Actions\UpdateLeadAction;
 use App\Http\Requests\UpdateLeadRequest;
 use App\Models\Lead;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
 
 class LeadController extends Controller
 {
@@ -17,7 +17,7 @@ class LeadController extends Controller
      */
     public function index(Request $request, ListLeadsAction $action): View
     {
-        $perPage = $request->query('per_page', 5);
+        $perPage = (int) $request->query('per_page', '5');
 
         $leads = $action->execute($request->all());
 

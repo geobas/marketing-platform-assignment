@@ -15,10 +15,10 @@ class LeadResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'full_name' => $this->full_name,
-            'email' => $this->email,
-            'consent' => $this->consent,
+            'id' => $this->resource->id,
+            'full_name' => $this->resource->full_name,
+            'email' => $this->resource->email,
+            'consent' => $this->resource->consent,
         ];
     }
 }
