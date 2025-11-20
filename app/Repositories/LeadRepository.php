@@ -32,6 +32,7 @@ class LeadRepository implements LeadRepositoryInterface
     {
         return $this->lead
             ->paginate($data['per_page'] ?? self::PER_PAGE)
+            ->withQueryString()
             ->appends([
                 'per_page' => $data['per_page'] ?? self::PER_PAGE,
             ]);

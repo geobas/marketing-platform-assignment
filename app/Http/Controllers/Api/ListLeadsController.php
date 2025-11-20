@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Actions\ListLeadsAction;
 use App\Http\Requests\ListLeadsRequest;
