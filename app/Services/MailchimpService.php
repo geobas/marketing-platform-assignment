@@ -57,7 +57,7 @@ class MailchimpService
         $subscriberHash = md5(strtolower($oldEmail));
 
         try {
-            $this->client->lists->updateListMember(
+            $this->client->lists->setListMember(
                 $this->listId,
                 $subscriberHash,
                 [
@@ -84,8 +84,10 @@ class MailchimpService
     public function syncContact(?string $oldEmail, string $newEmail, string $fullName): void
     {
         if ($oldEmail === null) {
+            // First time: add only if consent is true
             $this->addToList($newEmail, $fullName);
         } else {
+            // Update or create if missing
             $this->updateContact($oldEmail, $newEmail, $fullName);
         }
     }

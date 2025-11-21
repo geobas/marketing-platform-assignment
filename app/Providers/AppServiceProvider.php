@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Contracts\LeadRepositoryInterface;
+use App\Models\Lead;
+use App\Observers\LeadObserver;
 use App\Repositories\LeadRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Lead::observe(LeadObserver::class);
     }
 }
