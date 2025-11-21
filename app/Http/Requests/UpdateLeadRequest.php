@@ -33,9 +33,26 @@ class UpdateLeadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'full_name' => ['required', 'string', 'max:100'],
+            'full_name' => ['required', 'string', 'min:5', 'max:100'],
             'email' => ['required', 'email', 'max:100'],
             'consent' => ['sometimes', 'boolean'],
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'full_name.required' => 'The full name is required.',
+            'full_name.string' => 'The full name must be a string.',
+            'full_name.min' => 'The full name must be at least 5 characters.',
+            'full_name.max' => 'The full name must not be greater than 100 characters.',
+            'email.required' => 'The email is required.',
+            'consent.boolean' => 'The consent must be true or false.',
         ];
     }
 
@@ -45,8 +62,7 @@ class UpdateLeadRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            /** @phpstan-ignore-next-line */
-            $leadId = $this->is('api/*') ? $this->route('lead') : $this->route('lead')->id;
+            $leadId = $this->getLeadId();
 
             if (empty($this->repository->findById($leadId))) {
                 $validator->errors()->add('lead', 'Lead not found.');
@@ -65,8 +81,7 @@ class UpdateLeadRequest extends FormRequest
      */
     public function toDto(): UpdateLeadData
     {
-        /** @phpstan-ignore-next-line */
-        $leadId = $this->is('api/*') ? $this->route('lead') : $this->route('lead')->id;
+        $leadId = $this->getLeadId();
 
         return new UpdateLeadData(
             _id: $leadId,
@@ -74,5 +89,14 @@ class UpdateLeadRequest extends FormRequest
             email: $this->validated('email'),
             consent: $this->validated('consent') ?? false,
         );
+    }
+
+    /**
+     * Get the lead ID from the route, regardless of API or Web.
+     */
+    private function getLeadId(): mixed
+    {
+        /** @phpstan-ignore-next-line */
+        return $this->is('api/*') ? $this->route('lead') : $this->route('lead')->id;
     }
 }

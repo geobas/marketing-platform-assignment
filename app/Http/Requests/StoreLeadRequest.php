@@ -23,9 +23,26 @@ class StoreLeadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'full_name' => ['required', 'string', 'max:100'],
+            'full_name' => ['required', 'string', 'min:5', 'max:100'],
             'email' => ['required', 'email', 'max:100', 'unique:leads,email'],
             'consent' => ['sometimes', 'boolean'],
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'full_name.required' => 'The full name is required.',
+            'full_name.string' => 'The full name must be a string.',
+            'full_name.min' => 'The full name must be at least 5 characters.',
+            'full_name.max' => 'The full name must not be greater than 100 characters.',
+            'email.required' => 'The email is required.',
+            'consent.boolean' => 'The consent must be true or false.',
         ];
     }
 

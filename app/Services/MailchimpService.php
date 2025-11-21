@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Exceptions\MailchimpServiceException;
 use Illuminate\Support\Facades\Log;
 use MailchimpMarketing\ApiClient;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class MailchimpService
@@ -25,12 +27,15 @@ class MailchimpService
 
     /**
      * Subscribe a new contact to the list.
+     *
+     * @throws MailchimpServiceException
      */
     public function addToList(string $email, string $fullName): void
     {
         [$first, $last] = $this->splitName($fullName);
 
         try {
+            /** @phpstan-ignore-next-line */
             $this->client->lists->addListMember($this->listId, [
                 'email_address' => $email,
                 'status' => 'subscribed',
@@ -44,11 +49,19 @@ class MailchimpService
                 'email' => $email,
                 'error' => $e->getMessage(),
             ]);
+
+            throw new MailchimpServiceException(
+                message: "Failed to subscribe {$email} to Mailchimp.",
+                internalMessage: "Failed to add {$email} to Mailchimp list.",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR,
+            );
         }
     }
 
     /**
      * Update an existing contact.
+     *
+     * @throws MailchimpServiceException
      */
     public function updateContact(string $oldEmail, string $newEmail, string $fullName): void
     {
@@ -57,6 +70,7 @@ class MailchimpService
         $subscriberHash = md5(strtolower($oldEmail));
 
         try {
+            /** @phpstan-ignore-next-line */
             $this->client->lists->setListMember(
                 $this->listId,
                 $subscriberHash,
@@ -75,11 +89,19 @@ class MailchimpService
                 'new_email' => $newEmail,
                 'error' => $e->getMessage(),
             ]);
+
+            throw new MailchimpServiceException(
+                message: "Failed to subscribe {$newEmail} to Mailchimp.",
+                internalMessage: "Failed to upsert {$newEmail} to Mailchimp list.",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR,
+            );
         }
     }
 
     /**
      * Sync contact: add or update.
+     *
+     * @throws MailchimpServiceException
      */
     public function syncContact(?string $oldEmail, string $newEmail, string $fullName): void
     {
