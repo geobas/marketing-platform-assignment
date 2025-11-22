@@ -39,6 +39,12 @@ class SyncLeadToMailchimp implements ShouldQueue
      */
     public function handle(MailchimpService $mailchimp): void
     {
+        if (empty(config('services.mailchimp.api_key'))
+            || empty(config('services.mailchimp.server_prefix'))
+            || empty(config('services.mailchimp.list_id'))) {
+            return;
+        }
+
         $mailchimp->syncContact(
             $this->oldEmail,
             $this->newEmail,
