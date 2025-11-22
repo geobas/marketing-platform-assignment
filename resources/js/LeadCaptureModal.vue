@@ -104,7 +104,11 @@ export default {
 
         async submitForm() {
             try {
-                await axios.post("/api/leads", this.form);
+                await axios.post("/api/leads", this.form, {
+                    headers: {
+                        'X-API-KEY': import.meta.env.VITE_API_KEY,
+                    },
+                });
 
                 // Emit success to parent
                 this.$emit("Success", "Thank you! Your information has been submitted.");
