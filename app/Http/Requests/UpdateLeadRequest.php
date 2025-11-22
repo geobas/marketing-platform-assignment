@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Contracts\LeadRepositoryInterface;
 use App\DTOs\UpdateLeadData;
+use App\Rules\NotExampleDomain;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateLeadRequest extends FormRequest
@@ -34,7 +35,7 @@ class UpdateLeadRequest extends FormRequest
     {
         return [
             'full_name' => ['required', 'string', 'min:5', 'max:100'],
-            'email' => ['required', 'email', 'max:100'],
+            'email' => ['required', 'email', 'max:100', new NotExampleDomain],
             'consent' => ['sometimes', 'boolean'],
         ];
     }

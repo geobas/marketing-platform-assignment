@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use ReflectionClass;
@@ -22,13 +23,19 @@ class MailchimpServiceException extends Exception
     }
 
     /**
-     * Render the exception as a JSON response.
+     * If the request expects JSON, returns a JSON response with the error message
+     * and the HTTP status code defined in the exception. Otherwise, redirects back
+     * to the previous page with a flash error message.
      */
-    public function render(Request $request): JsonResponse
+    public function render(Request $request): JsonResponse|RedirectResponse
     {
-        return response()->json([
-            'error' => $this->getMessage(),
-        ], $this->status);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'error' => $this->getMessage(),
+            ], $this->status);
+        }
+
+        return back()->with('error', 'Mailchimp service error');
     }
 
     /**

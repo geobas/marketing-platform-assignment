@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\MailchimpServiceException;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Log;
 use MailchimpMarketing\ApiClient;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,15 +45,26 @@ class MailchimpService
                     'LNAME' => $last,
                 ],
             ]);
-        } catch (Throwable $e) {
+        } catch (RequestException $e) {
             Log::error('Mailchimp addToList failed', [
                 'email' => $email,
-                'error' => $e->getMessage(),
+                'error' => $e->getResponse()->getBody(),
             ]);
 
             throw new MailchimpServiceException(
                 message: "Failed to subscribe {$email} to Mailchimp.",
                 internalMessage: "Failed to add {$email} to Mailchimp list.",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR,
+            );
+        } catch (Throwable $t) {
+            Log::error('Mailchimp addToList unexpected error', [
+                'email' => $email,
+                'error' => $t->getMessage(),
+            ]);
+
+            throw new MailchimpServiceException(
+                message: 'Failed to subscribe contact to Mailchimp. Please try again later.',
+                internalMessage: $t->getMessage(),
                 status: Response::HTTP_INTERNAL_SERVER_ERROR,
             );
         }
@@ -83,16 +95,27 @@ class MailchimpService
                     ],
                 ]
             );
-        } catch (Throwable $e) {
+        } catch (RequestException $e) {
             Log::error('Mailchimp updateContact failed', [
                 'old_email' => $oldEmail,
                 'new_email' => $newEmail,
-                'error' => $e->getMessage(),
+                'error' => $e->getResponse()->getBody(),
             ]);
 
             throw new MailchimpServiceException(
                 message: "Failed to subscribe {$newEmail} to Mailchimp.",
                 internalMessage: "Failed to upsert {$newEmail} to Mailchimp list.",
+                status: Response::HTTP_INTERNAL_SERVER_ERROR,
+            );
+        } catch (Throwable $t) {
+            Log::error('Mailchimp updateContact unexpected error', [
+                'email' => $newEmail,
+                'error' => $t->getMessage(),
+            ]);
+
+            throw new MailchimpServiceException(
+                message: 'Failed to subscribe contact to Mailchimp. Please try again later.',
+                internalMessage: $t->getMessage(),
                 status: Response::HTTP_INTERNAL_SERVER_ERROR,
             );
         }

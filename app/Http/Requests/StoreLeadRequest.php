@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\DTOs\LeadData;
+use App\Rules\NotExampleDomain;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreLeadRequest extends FormRequest
@@ -24,7 +25,7 @@ class StoreLeadRequest extends FormRequest
     {
         return [
             'full_name' => ['required', 'string', 'min:5', 'max:100'],
-            'email' => ['required', 'email', 'max:100', 'unique:leads,email'],
+            'email' => ['required', 'email', 'max:100', 'unique:leads,email', new NotExampleDomain],
             'consent' => ['sometimes', 'boolean'],
         ];
     }

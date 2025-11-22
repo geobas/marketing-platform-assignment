@@ -13,12 +13,13 @@
         </div>
     @endif
 
-    @if ($errors->any())
+    @if ($errors->any() || session('error'))
         <div class="mb-4 bg-red-100 text-red-800 p-3 rounded">
             <ul class="list-disc list-inside">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
+                {{ session('error') }}
             </ul>
         </div>
     @endif
