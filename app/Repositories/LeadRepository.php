@@ -5,9 +5,11 @@ namespace App\Repositories;
 use App\Contracts\LeadRepositoryInterface;
 use App\DTOs\LeadData;
 use App\DTOs\UpdateLeadData;
+use App\Exceptions\LeadRepositoryException;
 use App\Models\Lead;
 use Illuminate\Pagination\LengthAwarePaginator;
 use MongoDB\BSON\ObjectId;
+use Throwable;
 
 class LeadRepository implements LeadRepositoryInterface
 {
@@ -17,59 +19,106 @@ class LeadRepository implements LeadRepositoryInterface
     const PER_PAGE = 5;
 
     /**
-     * Constructor
+     * Initialize repository.
      */
     public function __construct(
         private Lead $lead,
     ) {}
 
+    /**
+     * Create a new lead.
+     *
+     * @throws LeadRepositoryException
+     */
     public function create(LeadData $data): Lead
     {
-        /** @var Lead $lead */
-        $lead = $this->lead->create($data->toArray());
+        try {
+            /** @var Lead $lead */
+            $lead = $this->lead->create($data->toArray());
 
-        return $lead;
+            return $lead;
+        } catch (Throwable $e) {
+            throw new LeadRepositoryException('Failed to create lead.', $e, $e->getCode());
+        }
     }
 
+    /**
+     * Paginate leads.
+     *
+     * @throws LeadRepositoryException
+     */
     public function list(array $data): LengthAwarePaginator
     {
-        return $this->lead
-            ->paginate($data['per_page'] ?? self::PER_PAGE)
-            ->withQueryString()
-            ->appends([
-                'per_page' => $data['per_page'] ?? self::PER_PAGE,
-            ]);
+        try {
+            return $this->lead
+                ->paginate($data['per_page'] ?? self::PER_PAGE)
+                ->withQueryString()
+                ->appends([
+                    'per_page' => $data['per_page'] ?? self::PER_PAGE,
+                ]);
+        } catch (Throwable $e) {
+            throw new LeadRepositoryException('Failed to list leads.', $e, $e->getCode());
+        }
     }
 
+    /**
+     * Update a lead.
+     *
+     * @throws LeadRepositoryException
+     */
     public function update(UpdateLeadData $data): Lead
     {
-        /** @var Lead $lead */
-        $lead = $this->lead->find(new ObjectId($data->_id));
+        try {
+            /** @var Lead|null $lead */
+            $lead = $this->lead->find(new ObjectId($data->_id));
 
-        return tap(
-            $lead,
-            function (Lead $lead) use ($data) {
+            if (! $lead) {
+                throw new LeadRepositoryException("Lead not found: {$data->_id}");
+            }
+
+            return tap($lead, function (Lead $lead) use ($data) {
                 $lead->update([
                     'full_name' => $data->fullName,
                     'email' => $data->email,
                     'consent' => $data->consent ?? false,
                 ]);
-            }
-        );
+            });
+        } catch (Throwable $e) {
+            throw new LeadRepositoryException('Failed to update lead.', $e, $e->getCode());
+        }
     }
 
+    /**
+     * Find a lead by ID.
+     *
+     * @throws LeadRepositoryException
+     */
     public function findById(string $id): ?Lead
     {
-        /** @var Lead|null $lead */
-        $lead = $this->lead->find($id);
+        try {
+            /** @var Lead|null $lead */
+            $lead = $this->lead->find($id);
 
-        return $lead;
+            return $lead;
+        } catch (Throwable $e) {
+            throw new LeadRepositoryException("Failed to fetch lead with ID: {$id}", $e, $e->getCode());
+        }
     }
 
+    /**
+     * Check if email exists excluding a specific ID.
+     *
+     * @throws LeadRepositoryException
+     */
     public function existsByEmailExceptId(string $email, string $excludeId): bool
     {
-        return $this->lead->where('email', $email)
-            ->where('_id', '!=', $excludeId)
-            ->exists();
+        try {
+            return $this->lead
+                ->where('email', $email)
+                ->where('_id', '!=', $excludeId)
+                ->exists();
+        } catch (Throwable $e) {
+            throw new LeadRepositoryException('Failed to check email uniqueness.', $e, $e->getCode());
+        }
     }
 }
