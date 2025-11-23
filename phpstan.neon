@@ -2,7 +2,7 @@ includes:
     - vendor/phpstan/phpstan/conf/bleedingEdge.neon # optional, enables latest checks
 
 parameters:
-    level: 5
+    level: 8
     paths:
         - app
 

@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Contracts\LeadRepositoryInterface;
 use App\DTOs\UpdateLeadData;
 use App\Rules\NotExampleDomain;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateLeadRequest extends FormRequest
@@ -60,7 +61,7 @@ class UpdateLeadRequest extends FormRequest
     /**
      * Configure the validator instance.
      */
-    public function withValidator($validator)
+    public function withValidator(Validator $validator): void
     {
         $validator->after(function ($validator) {
             $leadId = $this->getLeadId();

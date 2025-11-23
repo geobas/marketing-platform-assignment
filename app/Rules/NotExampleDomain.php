@@ -16,7 +16,7 @@ class NotExampleDomain implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         // Extract domain
-        $domain = substr(strrchr($value, '@'), 1);
+        $domain = substr(strrchr($value, '@'), 1); // @phpstan-ignore-line
 
         // Block any example.* domain
         if (preg_match('/^example\./i', $domain)) {

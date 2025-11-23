@@ -18,12 +18,14 @@ class SyncLeadToMailchimp implements ShouldQueue
     /**
      * The number of times the job may be attempted.
      */
-    public $tries = 3;
+    public int $tries = 3;
 
     /**
      * The time (in seconds) before retrying the job.
+     *
+     * @var list<int>
      */
-    public $backoff = [10, 30, 60];
+    public array $backoff = [10, 30, 60];
 
     /**
      * Create a new job instance.

@@ -48,7 +48,7 @@ class MailchimpService
         } catch (RequestException $e) {
             Log::error('Mailchimp addToList failed', [
                 'email' => $email,
-                'error' => $e->getResponse()->getBody(),
+                'error' => $e->getResponse()?->getBody()?->__toString() ?? 'No response body',
             ]);
 
             throw new MailchimpServiceException(
@@ -99,7 +99,7 @@ class MailchimpService
             Log::error('Mailchimp updateContact failed', [
                 'old_email' => $oldEmail,
                 'new_email' => $newEmail,
-                'error' => $e->getResponse()->getBody(),
+                'error' => $e->getResponse()?->getBody()?->__toString() ?? 'No response body',
             ]);
 
             throw new MailchimpServiceException(
@@ -139,6 +139,8 @@ class MailchimpService
 
     /**
      * Split full name into first and last name.
+     *
+     * @return list<string>
      */
     private function splitName(string $fullName): array
     {

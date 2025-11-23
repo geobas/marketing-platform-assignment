@@ -7,6 +7,7 @@ use App\Actions\UpdateLeadAction;
 use App\Http\Requests\UpdateLeadRequest;
 use App\Models\Lead;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -35,7 +36,7 @@ class LeadController extends Controller
     /**
      * Update the specified Lead.
      */
-    public function update(UpdateLeadRequest $request, Lead $lead, UpdateLeadAction $action)
+    public function update(UpdateLeadRequest $request, Lead $lead, UpdateLeadAction $action): RedirectResponse
     {
         $lead = $action->execute($request->toDto());
 

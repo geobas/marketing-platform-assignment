@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Actions\StoreLeadAction;
 use App\Http\Requests\StoreLeadRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,7 +13,7 @@ class StoreLeadController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(StoreLeadRequest $request, StoreLeadAction $action)
+    public function __invoke(StoreLeadRequest $request, StoreLeadAction $action): JsonResponse
     {
         $action->execute($request->toDto());
 

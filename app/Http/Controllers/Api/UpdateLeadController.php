@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Actions\UpdateLeadAction;
 use App\Http\Requests\UpdateLeadRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,7 +13,7 @@ class UpdateLeadController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(UpdateLeadRequest $request, string $id, UpdateLeadAction $action)
+    public function __invoke(UpdateLeadRequest $request, string $id, UpdateLeadAction $action): JsonResponse
     {
         $action->execute($request->toDto());
 

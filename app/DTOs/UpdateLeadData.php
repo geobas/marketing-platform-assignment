@@ -19,6 +19,8 @@ final readonly class UpdateLeadData
 
     /**
      * Convert DTO to array.
+     *
+     * @return array<string, string|bool>
      */
     public function toArray(): array
     {

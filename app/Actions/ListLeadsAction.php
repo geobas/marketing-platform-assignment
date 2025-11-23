@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Contracts\LeadRepositoryInterface;
+use App\Models\Lead;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ListLeadsAction
@@ -16,6 +17,9 @@ class ListLeadsAction
 
     /**
      * Execute the action to list all Leads.
+     *
+     * @param array<string, mixed> $data
+     * @return LengthAwarePaginator<int, Lead>
      */
     public function execute(array $data): LengthAwarePaginator
     {

@@ -16,6 +16,9 @@ interface LeadRepositoryInterface
 
     /**
      * List all Leads.
+     *
+     * @param array<string, mixed> $data
+     * @return LengthAwarePaginator<int, Lead>
      */
     public function list(array $data): LengthAwarePaginator;
 
