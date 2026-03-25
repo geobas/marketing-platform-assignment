@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Actions\StoreLeadAction;
 use App\Http\Requests\StoreLeadRequest;
+use App\Http\Responses\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,9 @@ class StoreLeadController extends Controller
 
         Log::info('Lead stored successfully.', ['lead' => $request->toDto()->toArray()]);
 
-        return response()->json(['message' => 'Lead stored successfully.'], Response::HTTP_CREATED);
+        return ApiResponse::success(
+            message: 'Lead stored successfully.',
+            statusCode: Response::HTTP_CREATED
+        );
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Actions\UpdateLeadAction;
 use App\Http\Requests\UpdateLeadRequest;
+use App\Http\Responses\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,9 @@ class UpdateLeadController extends Controller
 
         Log::info('Lead updated successfully.', ['lead' => $request->toDto()->toArray()]);
 
-        return response()->json(['message' => 'Lead updated successfully.'], Response::HTTP_OK);
+        return ApiResponse::success(
+            message: 'Lead updated successfully.',
+            statusCode: Response::HTTP_OK
+        );
     }
 }
