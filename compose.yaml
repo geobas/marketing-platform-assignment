@@ -1,6 +1,6 @@
 services:
     laravel.test:
-        container_name: learn-worlds
+        container_name: marketing-platform
         build:
             context: './vendor/laravel/sail/runtimes/8.4'
             dockerfile: Dockerfile
@@ -27,7 +27,7 @@ services:
 
     mongodb:
         image: mongo:6.0
-        container_name: "learn-worlds-mongodb"
+        container_name: "marketing-platform-mongodb"
         restart: unless-stopped
         ports:
             - "27017:27017"

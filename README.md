@@ -2,8 +2,8 @@
 
 1. **Clone the repository**
 ```bash
-git clone git@gitlab.com:geobas/learn_worlds_assignment.git learn_worlds_assignment && \
-cd learn_worlds_assignment
+git clone git@github.com:geobas/marketing-platform-assignment.git && \
+cd marketing-platform-assignment
 ```
 
 2. **Install PHP dependencies**
