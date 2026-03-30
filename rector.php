@@ -3,18 +3,22 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use RectorLaravel\Rector\StaticCall\AssertWithClassStringToTypeHintedClosureRector;
+use RectorLaravel\Rector\StaticCall\DispatchToHelperFunctionsRector;
 use RectorLaravel\Set\LaravelSetList;
 use RectorLaravel\Set\LaravelSetProvider;
 
 return RectorConfig::configure()
     ->withPaths([
         __DIR__ . '/app',
-        // __DIR__ . '/bootstrap',
         __DIR__ . '/config',
-        __DIR__ . '/public',
+        __DIR__ . '/database',
         __DIR__ . '/resources',
         __DIR__ . '/routes',
         __DIR__ . '/tests',
+    ])
+    ->withAutoloadPaths([
+        __DIR__ . '/vendor/autoload.php',
     ])
     ->withSetProviders(LaravelSetProvider::class)
     ->withComposerBased(laravel: true)
@@ -28,10 +32,10 @@ return RectorConfig::configure()
         LaravelSetList::LARAVEL_TESTING,
         LaravelSetList::LARAVEL_TYPE_DECLARATIONS,
     ])
-    ->withAutoloadPaths([
-        __DIR__ . '/vendor/autoload.php',
+    ->withSkip([
+        DispatchToHelperFunctionsRector::class,
+        AssertWithClassStringToTypeHintedClosureRector::class,
     ])
-    // uncomment to reach your current PHP version
     ->withPhpSets(php84: true)
     ->withTypeCoverageLevel(0)
     ->withDeadCodeLevel(0)
