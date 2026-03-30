@@ -40,15 +40,19 @@ vendor/bin/sail npm run build
 3. View all Leads by clicking the 'List Leads' button
 
 ## 🧰 Developer Utilities
-**Run automated tests**
+**Refactor code**
 ```bash
-sail test
+sail bin rector process
+```
+**Fix code style**
+```bash
+sail pint
 ```
 **Run static analysis**
 ```bash
 sail bin phpstan
 ```
-**Fix code style**
+**Run automated tests**
 ```bash
-sail pint
+sail test
 ```
