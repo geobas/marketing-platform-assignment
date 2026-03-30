@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\StoreLeadController;
 use App\Http\Controllers\Api\UpdateLeadController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['api_key'])->group(function () {
+Route::middleware(['api_key'])->group(function (): void {
     Route::get('/leads', ListLeadsController::class);
     Route::post('/leads', StoreLeadController::class);
     Route::put('/leads/{lead}', UpdateLeadController::class);

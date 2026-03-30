@@ -12,7 +12,7 @@ class UpdateLeadAction
      * Constructor
      */
     public function __construct(
-        private LeadRepositoryInterface $repository
+        private readonly LeadRepositoryInterface $repository
     ) {}
 
     /**

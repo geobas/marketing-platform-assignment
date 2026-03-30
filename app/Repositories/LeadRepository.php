@@ -22,7 +22,7 @@ class LeadRepository implements LeadRepositoryInterface
      * Initialize repository.
      */
     public function __construct(
-        private Lead $lead,
+        private readonly Lead $lead,
     ) {}
 
     /**
@@ -76,7 +76,7 @@ class LeadRepository implements LeadRepositoryInterface
                 throw new LeadRepositoryException("Lead not found: {$data->_id}");
             }
 
-            return tap($lead, function (Lead $lead) use ($data) {
+            return tap($lead, function (Lead $lead) use ($data): void {
                 $lead->update([
                     'full_name' => $data->fullName,
                     'email' => $data->email,

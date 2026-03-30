@@ -15,7 +15,7 @@ class UpdateLeadRequest extends FormRequest
      * Override the constructor.
      */
     public function __construct(
-        private LeadRepositoryInterface $repository
+        private readonly LeadRepositoryInterface $repository
     ) {
         parent::__construct();
     }
@@ -64,7 +64,7 @@ class UpdateLeadRequest extends FormRequest
      */
     public function withValidator(Validator $validator): void
     {
-        $validator->after(function ($validator) {
+        $validator->after(function ($validator): void {
             $leadId = $this->getLeadId();
 
             if (empty($this->repository->findById($leadId))) {

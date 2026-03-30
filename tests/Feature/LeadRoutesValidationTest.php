@@ -46,7 +46,7 @@ class LeadRoutesValidationTest extends TestCase
 
         $response = $this->getJson('/api/leads?per_page=50', $this->headers());
 
-        $response->assertStatus(422)->assertJsonValidationErrors(['per_page']);
+        $response->assertUnprocessable()->assertJsonValidationErrors(['per_page']);
     }
 
     #[Test]
@@ -63,7 +63,7 @@ class LeadRoutesValidationTest extends TestCase
 
         $response = $this->postJson('/api/leads', $payload, $this->headers());
 
-        $response->assertStatus(422)->assertJsonValidationErrors(['full_name', 'email', 'consent']);
+        $response->assertUnprocessable()->assertJsonValidationErrors(['full_name', 'email', 'consent']);
     }
 
     #[Test]
@@ -80,7 +80,7 @@ class LeadRoutesValidationTest extends TestCase
 
         $response = $this->postJson('/api/leads', $payload, $this->headers());
 
-        $response->assertStatus(422)->assertJsonValidationErrors(['email']);
+        $response->assertUnprocessable()->assertJsonValidationErrors(['email']);
     }
 
     #[Test]
@@ -104,7 +104,7 @@ class LeadRoutesValidationTest extends TestCase
 
         $response = $this->putJson("/api/leads/{$leadId}", $payload, $this->headers());
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['full_name', 'email', 'consent', 'lead']);
     }
 
@@ -131,7 +131,7 @@ class LeadRoutesValidationTest extends TestCase
 
         $response = $this->putJson("/api/leads/{$leadId}", $payload, $this->headers());
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['email']);
     }
 
@@ -156,7 +156,7 @@ class LeadRoutesValidationTest extends TestCase
 
         $response = $this->putJson("/api/leads/{$leadId}", $payload, $this->headers());
 
-        $response->assertStatus(422)
+        $response->assertUnprocessable()
             ->assertJsonValidationErrors(['email']);
     }
 }

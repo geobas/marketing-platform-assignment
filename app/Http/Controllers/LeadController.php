@@ -42,6 +42,6 @@ class LeadController extends Controller
 
         Log::info('Lead updated successfully.', ['lead' => $request->toDto()->toArray()]);
 
-        return redirect()->route('leads.edit', ['lead' => $lead])->with('success', 'Lead updated successfully.');
+        return to_route('leads.edit', ['lead' => $lead])->with('success', 'Lead updated successfully.');
     }
 }
