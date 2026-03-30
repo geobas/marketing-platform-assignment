@@ -8,6 +8,7 @@ use App\Actions\UpdateLeadAction;
 use App\Contracts\LeadRepositoryInterface;
 use App\DTOs\LeadData;
 use App\DTOs\UpdateLeadData;
+use App\Models\Lead;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Mockery;
 use PHPUnit\Framework\Attributes\Test;
@@ -89,7 +90,7 @@ class LeadRoutesTest extends TestCase
             'consent' => true,
         ];
 
-        $fakeLead = new \App\Models\Lead;
+        $fakeLead = new Lead;
         $fakeLead->_id = $leadId;
         $fakeLead->email = 'old@yahoo.com';
         $fakeLead->full_name = 'Old Name';

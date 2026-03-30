@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Contracts\LeadRepositoryInterface;
 use App\DTOs\UpdateLeadData;
 use App\Rules\NotExampleDomain;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -30,7 +31,7 @@ class UpdateLeadRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {

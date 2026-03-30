@@ -6,6 +6,7 @@ use App\Actions\ListLeadsAction;
 use App\Actions\StoreLeadAction;
 use App\Actions\UpdateLeadAction;
 use App\Contracts\LeadRepositoryInterface;
+use App\Models\Lead;
 use Mockery;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -119,7 +120,7 @@ class LeadRoutesValidationTest extends TestCase
         ];
 
         $repository = Mockery::mock(LeadRepositoryInterface::class);
-        $repository->shouldReceive('findById')->andReturn(new \App\Models\Lead);
+        $repository->shouldReceive('findById')->andReturn(new Lead);
         $repository->shouldReceive('existsByEmailExceptId')
             ->with('taken@example.com', $leadId)
             ->andReturn(true);
@@ -146,7 +147,7 @@ class LeadRoutesValidationTest extends TestCase
         ];
 
         $repository = Mockery::mock(LeadRepositoryInterface::class);
-        $repository->shouldReceive('findById')->andReturn(new \App\Models\Lead);
+        $repository->shouldReceive('findById')->andReturn(new Lead);
         $repository->shouldReceive('existsByEmailExceptId')->andReturn(false);
         $this->app->instance(LeadRepositoryInterface::class, $repository);
 
