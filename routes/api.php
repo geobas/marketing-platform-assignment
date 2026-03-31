@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Api\ListLeadsController;
 use App\Http\Controllers\Api\StoreLeadController;
 use App\Http\Controllers\Api\UpdateLeadController;
