@@ -17,6 +17,10 @@ class NotExampleDomain implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        if (! is_string($value) || ! str_contains($value, '@')) {
+            return; // let other rules (like 'email') handle this
+        }
+
         // Extract domain
         $domain = substr(strrchr((string) $value, '@'), 1); // @phpstan-ignore-line
 

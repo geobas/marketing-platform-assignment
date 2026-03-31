@@ -40,7 +40,7 @@ class LeadRepository implements LeadRepositoryInterface
 
             return $lead;
         } catch (Throwable $e) {
-            throw new LeadRepositoryException('Failed to create lead.', $e, $e->getCode());
+            throw new LeadRepositoryException(message: 'Failed to create lead.', status: $e->getCode());
         }
     }
 
@@ -59,7 +59,7 @@ class LeadRepository implements LeadRepositoryInterface
                     'per_page' => $data['per_page'] ?? self::PER_PAGE,
                 ]);
         } catch (Throwable $e) {
-            throw new LeadRepositoryException('Failed to list leads.', $e, $e->getCode());
+            throw new LeadRepositoryException(message: 'Failed to list leads.', status: $e->getCode());
         }
     }
 
@@ -86,7 +86,7 @@ class LeadRepository implements LeadRepositoryInterface
                 ]);
             });
         } catch (Throwable $e) {
-            throw new LeadRepositoryException('Failed to update lead.', $e, $e->getCode());
+            throw new LeadRepositoryException(message: 'Failed to update lead.', status: $e->getCode());
         }
     }
 
@@ -103,7 +103,7 @@ class LeadRepository implements LeadRepositoryInterface
 
             return $lead;
         } catch (Throwable $e) {
-            throw new LeadRepositoryException("Failed to fetch lead with ID: {$id}", $e, $e->getCode());
+            throw new LeadRepositoryException(message: "Failed to fetch lead with ID: {$id}", status: $e->getCode());
         }
     }
 
@@ -120,7 +120,7 @@ class LeadRepository implements LeadRepositoryInterface
                 ->where('_id', '!=', $excludeId)
                 ->exists();
         } catch (Throwable $e) {
-            throw new LeadRepositoryException('Failed to check email uniqueness.', $e, $e->getCode());
+            throw new LeadRepositoryException(message: 'Failed to check email uniqueness.', status: $e->getCode());
         }
     }
 }
