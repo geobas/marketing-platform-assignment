@@ -18,7 +18,8 @@
         },
         "single_quote": true,
         "indentation_type": true,
-        "phpdoc_align": false
+        "phpdoc_align": false,
+        "declare_strict_types": true
     },
     "exclude": [
         "bootstrap",
