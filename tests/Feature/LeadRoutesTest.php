@@ -57,7 +57,39 @@ class LeadRoutesTest extends TestCase
 
         $response = $this->getJson('/api/leads?per_page=10', $this->headers());
 
-        $response->assertOk()->assertJsonStructure(['data']);
+        $response->assertOk()
+            ->assertJsonStructure([
+                'status',
+                'message',
+                'data' => [
+                    '*' => [
+                        'id',
+                        'full_name',
+                        'email',
+                        'consent',
+                    ],
+                ],
+                'links' => [
+                    'first',
+                    'last',
+                    'prev',
+                    'next',
+                ],
+                'meta' => [
+                    'current_page',
+                    'from',
+                    'last_page',
+                    'links',
+                    'path',
+                    'per_page',
+                    'to',
+                    'total',
+                ],
+            ])
+            ->assertJson([
+                'status' => 'success',
+                'message' => 'Leads retrieved successfully.',
+            ]);
     }
 
     #[Test]
