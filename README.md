@@ -56,3 +56,11 @@ sail bin phpstan
 ```bash
 sail test
 ```
+**Run automated tests with HTML coverage report**
+```bash
+sail test --coverage-html=coverage
+```
+**Run all checks (code quality, static analysis, tests)**
+```bash
+composer run-script check-all
+```

@@ -73,6 +73,12 @@
         ],
         "pre-package-uninstall": [
             "Illuminate\\Foundation\\ComposerScripts::prePackageUninstall"
+        ],
+        "check-all": [
+            "sail bin rector process",
+            "sail pint",
+            "sail bin phpstan",
+            "sail test"
         ]
     },
     "extra": {
