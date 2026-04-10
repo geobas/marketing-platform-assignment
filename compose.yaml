@@ -41,8 +41,10 @@ services:
 
 networks:
     sail:
+        name: marketing-platform-network        
         driver: bridge
 
 volumes:
   sailmongodb:
+    name: marketing-platform-data
     driver: local
